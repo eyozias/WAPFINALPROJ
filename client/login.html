@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart - Login</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-bzjLLgZOhgXbSvSc5A9LWWo/mSIYf7U7nFbmYIB2Lgmuiw3vKGJuu+abKoaTx4W6" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/main-styles.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"
+    integrity="sha256-66f6uQTQkvHF8jpniLWJjnteEfmQaC/tATFew/nTBA8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <!-- Start Navbar -->
+    <nav class="navbar navbar-dark bg-info">
+      <a class="navbar-brand" href="index.html">Shopping Cart</a>
+      <div style="margin-top: 1em">
+        <form style="display:flex; gap:30px;justify-content: center; align-items:center;">
+          <div>
+            <div class="row mb-3">
+              <label for="username" class="form-control-sm col-sm-4 col-form-label">Username</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control form-control-sm" id="username" name="username" />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="password" class="form-control-sm col-sm-4">Password</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control form-control-sm" id="password" name="password" />
+              </div>
+            </div>
+            <div>
+              <label class="text-danger"></label>
+            </div>
+          </div>
+          <div style="margin-bottom: 50px;">
+            <button type="submit" class="btn btn-info form-control-sm">Login</button>
+          </div>
+        </form>
+      </div>
+      </div>
+    </nav>
+    <main>
+      <h1 style="display: flex;align-items: center; justify-content: center; margin-top: 5%;font-family: cursive;">
+        Welcome To My Store
+      </h1>
+    </main>
+    <!-- End Navbar -->
+  </header>
+
+  <footer>
+    <div>
+      <span style="margin-left: 1em"> ::: CS472-WAP</span>
+      <span style="float: right; margin-right: 1em"> &copy; May 2023</span>
+    </div>
+  </footer>
+  <script>
+    $(document).ready(function () {
+      $("form").on("submit", function (event) {
+        event.preventDefault();
+
+        const username = $("#username").val();
+        const password = $("#password").val();
+
+        {
+          fetch("http://localhost:3000/login", {
+            method: "POST",
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+
+              let errorNode =
+                document.getElementsByClassName("text-danger")[0];
+              if (data.error) {
+                errorNode.innerHTML = data.error;
+              } else {
+                errorNode.classList.add("d-none");
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("user", data.username);
+                window.location.href = "index.html";
+              }
+            });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

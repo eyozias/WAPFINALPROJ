@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-bzjLLgZOhgXbSvSc5A9LWWo/mSIYf7U7nFbmYIB2Lgmuiw3vKGJuu+abKoaTx4W6" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/main-styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"
+    integrity="sha256-66f6uQTQkvHF8jpniLWJjnteEfmQaC/tATFew/nTBA8=" crossorigin="anonymous"></script>
+</head>
+<style>
+  /* table {
+    display: none; /* Initially hide the table */
+</style>
+
+<body>
+  <header>
+    <!-- Start Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info"
+      style="display:flex;align-items: center; justify-content: space-between;">
+      <a class="navbar-brand" href="index.html">Shopping Cart</a>
+      <h5 style="margin-left: 30px; font-family: cursive;"> Welcome, <span id="output"
+          style="text-decoration: underline;"></span></h5>
+      <div style="display:flex;align-items: center;">
+        <button type="button" class="btn btn-info form-control-sm" onclick="logout()">Logout</button>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+  </header>
+  <script>
+    // Function to handle logout
+    function logout() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("products")
+      window.location.href = 'index.html';
+    }
+    var storedValue = localStorage.getItem("user");
+    console.log(storedValue)
+    if (storedValue) {
+      document.getElementById('output').textContent = storedValue;
+    } else {
+      document.getElementById('output').textContent = "No value found in LocalStorage.";
+    }
+    var table = document.getElementById('mytable');
+    if (table.rows.length > 1) {
+      table.style.display = 'table'; // Display the table
+    }
+  </script>
+  <!-- Start main-content -->
+  <main style="padding-bottom: 100px;">
+    <div class="container">
+      <!-- main content here -->
+      <h3>Product List</h3>
+      <hr />
+
+      <div id="divPatientsList" style="font-size: 1em">
+        <table class="table table-striped" id="mytable">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Image</th>
+              <th scope="col">Price</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyProductList"></tbody>
+        </table>
+      </div>
+
+      <h3>Your Shopping Cart</h3>
+      <div id="tableContainer">
+        <h5>There is No Item in your Shopping Cart</h5>
+      </div>
+      <p id="totalCost" class="float-left"></p>
+      <div id="place">
+
+      </div>
+    </div>
+    </div>
+  </main>
+  <!-- End main-content -->
+
+  <!-- Start footer -->
+  <footer style="background-color: rgb(177, 177, 177); padding-bottom: 50px; ">
+    <div>
+      <span>CS472-WAP</span>
+      <span> &copy; Eyosias Mekonnen May 2023 </span>
+    </div>
+  </footer>
+  <script src="./js/browse.js"></script>
+</body>
+
+</html>
